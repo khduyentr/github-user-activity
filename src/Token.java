@@ -1,14 +1,34 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 
 public class Token {
-    public static String getToken() {
-        Path path = Paths.get(System.getProperty("user.dir"), "token.txt");
+    // Singleton instance
+    private static Token instance;
 
-        System.out.println(path.toFile());
+    // Cached token
+    private final String token;
+
+    // Private constructor
+    private Token() {
+        this.token = loadTokenFromFile();
+    }
+
+    // Public method to get the singleton instance
+    public static Token getInstance() {
+        if (instance == null) {
+            instance = new Token();
+        }
+        return instance;
+    }
+
+    // Public method to get the token
+    public String getToken() {
+        return token;
+    }
+
+    public static String loadTokenFromFile() {
         try (BufferedReader reader = new BufferedReader(new FileReader("token.txt"))) {
             return reader.readLine().trim();
         } catch (IOException e) {

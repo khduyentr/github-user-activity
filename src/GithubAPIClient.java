@@ -5,7 +5,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class GithubAPIClient {
-    private static final String GIT_TOKEN = Token.getToken();
+    private static final String GIT_TOKEN = Token.getInstance().getToken();
 
     public static String fetchUserEventsByUsername(String username, int limit, int page) throws IOException {
         String apiUrl = String.format(
