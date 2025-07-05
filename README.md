@@ -58,12 +58,18 @@ Sample Output:
 > FETCHING DATA ...
 > PARAMS: {page:1, per_page:4}
 > FOUND 4 EVENTS: 
-[2025-06-26 14:20:56] User "khduyentr" (ID: 39858155)
-- Event ID: 51382152865
+
+[2025-06-25 16:16:07] User "khduyentr" (ID: 39858155)
+- Event ID: 51337373315
 - Profile: https://api.github.com/users/khduyentr
-- Action: CreateEvent
-- Repository: khduyentr/github-user-activity
-- Repo URL: https://api.github.com/repos/khduyentr/github-user-activity
+- Action: PushEvent
+- Repository: khduyentr/task-tracker
+- Repo URL: https://api.github.com/repos/khduyentr/task-tracker
+
+> Commit:
+  [Author]: Khanh Duyen(39858155+khduyentr@users.noreply.github.com)
+  [Message]: Update README.md
+  [URL]: https://api.github.com/repos/khduyentr/task-tracker/commits/000d77a2b9d65be06ca539785258d2e9b9f7e96b"}
 
 -----
 ```
