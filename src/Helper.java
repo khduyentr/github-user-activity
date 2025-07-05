@@ -29,8 +29,9 @@ public class Helper {
 
     public static String extractStringValue(String json, String key) {
         int startIndex = json.indexOf(key);
+        if (startIndex < 0) return "";
         int endIndex = json.indexOf(",", startIndex) == -1 ? json.length() - 2 : json.indexOf(",", startIndex);
-
+        if (endIndex < 0) return "";
         String line = json.substring(startIndex -1, endIndex);
 
         return getValueFromLine(line);

@@ -59,18 +59,23 @@ public class GitEvent {
         GitRepo repo = GitRepo.parser(event);
         // parse the payload by property inside payload object: ref_type, description, master_branch, pusher_type
         GitPayload payload = GitPayload.parser(event);
-        // create object for 3.3 to 3.5
+        // create object for actor, repo, payload
         // use that for the git event constructor
         return new GitEvent(eventId, eventType, eventPublished, eventCreatedAt, actor, repo, payload);
     }
 
     @Override
     public String toString() {
+        StringBuilder builder = new StringBuilder();
+        for (GitCommit commit: this.getPayload().getCommits()) {
+            builder.append(commit);
+        }
         return "[" + Helper.formatDateTime(this.getCreatedAt()) + "] User \"" + this.getActor().getLogin() + "\" (ID: " + this.getActor().getId() + ")\n"
                 + "- Event ID: " + this.getId() + "\n"
                 + "- Profile: " + this.getActor().getUrl() + "\n"
                 + "- Action: " + this.getType() + "\n"
                 + "- Repository: " + this.getRepo().getName() + "\n"
-                + "- Repo URL: " + this.getRepo().getUrl() + "\n\n";
+                + "- Repo URL: " + this.getRepo().getUrl() + "\n"
+                + "\n" + builder + "\n";
     }
 }

@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -7,12 +8,14 @@ public class GitPayload {
     private final Optional<String> description;
     private final String masterBranch;
     private final String pusherType;
+    private final List<GitCommit> commits;
 
-    public GitPayload(Optional<String> refType, Optional<String> description, String masterBranch, String pusherType) {
+    public GitPayload(Optional<String> refType, Optional<String> description, String masterBranch, String pusherType, List<GitCommit> commits) {
         this.refType = refType;
         this.description = description;
         this.masterBranch = masterBranch;
         this.pusherType = pusherType;
+        this.commits = commits;
     }
 
     public Optional<String> getRefType() {
@@ -31,6 +34,10 @@ public class GitPayload {
         return pusherType;
     }
 
+    public List<GitCommit> getCommits() {
+        return commits;
+    }
+
     public static GitPayload parser(String json) {
         int payloadStart = json.indexOf("\"payload\":");
         if (payloadStart == -1) {
@@ -42,9 +49,11 @@ public class GitPayload {
         int open = json.indexOf('{', payloadStart);
         int close = Helper.findMatchingBrace(json, open);
 
-        String jsonActor = json.substring(open + 1, close).trim();
+        String jsonPayload = json.substring(open + 1, close).trim();
 
-        String[] lines = jsonActor.split(",");
+        List<GitCommit> commits = GitCommit.listParser(jsonPayload);
+
+        String[] lines = jsonPayload.split(",");
         for (String line: lines) {
             line = line.trim();
             String[] parts = line.split(":", 2);
@@ -61,7 +70,7 @@ public class GitPayload {
         String refType = payloadMap.getOrDefault("ref_type", "");
         String description = payloadMap.getOrDefault("description", "");
 
-        return new GitPayload(Optional.ofNullable(refType), Optional.ofNullable(description), masterBranch, pusherType);
+        return new GitPayload(Optional.ofNullable(refType), Optional.ofNullable(description), masterBranch, pusherType, commits);
     }
 
     @Override

@@ -7,7 +7,7 @@ public class GitEventListParser {
 
 
         // 1. emit the [] bracket at the end and the start of response\
-        response = response.replace("[", "").replace("]", "");
+        response = response.substring(1, response.length() - 1);
         // 2. split the response by "},{"
         String[] events = response.split("},\\{\"id\"");
         // 3. loop through the list of event as string to parse each item
