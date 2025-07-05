@@ -28,10 +28,10 @@ public class Helper {
     }
 
     public static String extractStringValue(String json, String key) {
-        int startIdx = json.indexOf(key);
-        int endIndex = json.indexOf(",", startIdx) == -1 ? json.length() - 2 : json.indexOf(",", startIdx);
+        int startIndex = json.indexOf(key);
+        int endIndex = json.indexOf(",", startIndex) == -1 ? json.length() - 2 : json.indexOf(",", startIndex);
 
-        String line = json.substring(startIdx -1, endIndex);
+        String line = json.substring(startIndex -1, endIndex);
 
         return getValueFromLine(line);
     }

@@ -9,12 +9,11 @@ public class GitEventListParser {
         // 1. emit the [] bracket at the end and the start of response\
         response = response.replace("[", "").replace("]", "");
         // 2. split the response by "},{"
-        String[] events = response.split("\\},\\s*\\{");
-
+        String[] events = response.split("},\\{\"id\"");
         // 3. loop through the list of event as string to parse each item
         for (String event: events) {
             // add { } to the start and the end of each object
-            if (!event.startsWith("{")) event = "{" + event;
+            if (!event.startsWith("\\{\"id\"")) event = "\\{\"id\"" + event;
             if (!event.endsWith("}")) event = event + "}";
 
             GitEvent gitEvent = GitEvent.parse(event);
